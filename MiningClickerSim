@@ -1,0 +1,258 @@
+local VirtualUser=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+VirtualUser:CaptureController()
+VirtualUser:ClickButton2(Vector2.new())
+end)
+
+local Humanoid = game.Players.LocalPlayer.Character.Humanoid
+
+getgenv().Mine = false;
+getgenv().Rebirth = false;
+getgenv().Starter = false;
+getgenv().Spotted = false;
+getgenv().Floral = false;
+getgenv().Desert = false;
+getgenv().Snow = false;
+getgenv().Cave = false;
+getgenv().Ocean = false;
+getgenv().Jungle = false;
+getgenv().Volcano = false;
+getgenv().Space = false;
+getgenv().Undead = false;
+getgenv().Heavenly = false;
+getgenv().Devil = false;
+getgenv().OneMVisits = false;
+getgenv().Hatch = false;
+
+function doMine()
+    spawn(function()
+        while Mine == true do
+            game:GetService("ReplicatedStorage").Remotes.Click:InvokeServer()
+            wait(0.5)
+        end
+    end)
+end
+
+function doRebirth()
+    spawn(function()
+        while Rebirth == true do
+            game:GetService("ReplicatedStorage").Remotes.Rebirth:FireServer()
+            wait(2)
+        end
+    end)
+end
+
+function doStarter()
+    spawn(function()
+        while Starter == true do
+        local args = {[1] = "Starter Egg",[2] = 1}
+        game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(unpack(args))
+        wait(2)
+        end
+    end)
+end
+
+function doSpotted()
+    spawn(function()
+        while Spotted == true do
+        local args = {[1] = "Spotted Egg",[2] = 1}
+        game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(unpack(args))
+        wait(2)
+        end
+    end)
+end
+
+function doFloral()
+    spawn(function()
+        while Floral == true do
+        local args = {[1] = "Floral Egg",[2] = 1}
+        game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(unpack(args))
+        wait(2)
+        end
+    end)
+end
+
+function doFloral()
+    spawn(function()
+        while Floral == true do
+        local args = {[1] = "Floral Egg",[2] = 1}
+        game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(unpack(args))
+        wait(2)
+        end
+    end)
+end
+
+function buyEgg(eggType)
+    spawn(function()
+        while getgenv().Hatch == true do
+        local args = {[1] = eggType,[2] = 1}
+        game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(unpack(args))
+        wait()
+        end
+    end)
+end
+
+--------------------------------------------------------------------------
+
+function getCurrentPlayerPOS()
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        return plyr.Character.HumanoidRootPart.Position;
+    end
+    return false;
+end
+
+--------------------------------------------------------------------------
+
+function teleportTO(placeCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = placeCFrame;
+    end
+end
+
+function teleportZone(zone)
+    if game:GetService("Workspace").TeleportBricks:FindFirstChild(zone).CFrame then
+        teleportTO(game:GetService("Workspace").TeleportBricks[zone].CFrame)
+    end
+end
+
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+
+local w = library:CreateWindow("Mining Clicker Simulator")
+local a = library:CreateWindow("Auto Farm")
+local d = library:CreateWindow("Auto Hatch")
+local e = library:CreateWindow("Zones Teleports")
+local f = library:CreateWindow("Misc")
+
+
+local c = w:CreateFolder("General Information")
+local b = a:CreateFolder("Auto Farm")
+local i = d:CreateFolder("Eggs")
+local h = e:CreateFolder("Zones")
+local g = f:CreateFolder("Player")
+
+c:Label("Created By",{
+    TextSize = 17; -- Self Explaining
+    TextColor = Color3.fromRGB(255,255,255); -- Self Explaining
+    BgColor = Color3.fromRGB(69,69,69); -- Self Explaining  
+})
+
+c:Label("OrangeIsTheColour#4868",{
+    TextSize = 17; -- Self Explaining
+    TextColor = Color3.fromRGB(255,255,255); -- Self Explaining
+    BgColor = Color3.fromRGB(69,69,69); -- Self Explaining  
+})
+
+c:Label("UI: Wally Ui v3",{
+    TextSize = 17; -- Self Explaining
+    TextColor = Color3.fromRGB(255,255,255); -- Self Explaining
+    BgColor = Color3.fromRGB(69,69,69); -- Self Explaining   
+})
+
+c:Label("Obfuscator: Moonsec",{
+    TextSize = 17; -- Self Explaining
+    TextColor = Color3.fromRGB(255,255,255); -- Self Explaining
+    BgColor = Color3.fromRGB(69,69,69); -- Self Explaining   
+})
+
+b:Toggle("Auto Mine",function(bool)
+    getgenv().Mine = bool
+    print("Auto Mine is : ",bool)
+    if bool then
+        doMine();
+    end
+end)
+
+b:Toggle("Auto Rebirth",function(bool)
+    getgenv().Rebirth = bool
+    print("Auto Rebirth is : ",bool)
+    if bool then
+        doRebirth();
+    end
+end)
+
+
+local selectedEgg
+i:Dropdown("Eggs",{"Starter Egg","Spotted Egg","Floral Egg", "Desert Egg", "Snow Egg", "Cave Egg", "Ocean Egg", "Jungle Egg", "Volcano Egg", "Space Egg", "Undead Egg", "Heavenly Egg", "Devil Egg", "1M Egg"},true,function(value) --true/false, replaces the current title "Dropdown" with the option that t
+    selectedEgg = value;
+    print(value)
+end)
+
+i:Toggle("Auto Hatch", function (bool)
+    getgenv().Hatch = bool
+    print("Auto Hatch is: ", bool)
+    if bool and selectedEgg then
+        buyEgg(selectedEgg)
+    end
+end)
+
+local selectedZone
+h:Dropdown("Zones",{"Spawn","Desert","Snow", "Cave", "Ocean", "Jungle", "Volcano", "Space", "Undead Forest", "Heaven", "Hell Dungeon"},true,function(value) --true/false, replaces the current title "Dropdown" with the option that t
+    selectedZone = value;
+    print(value)
+end)
+
+h:Button("Teleport",function()
+    if selectedZone then
+        teleportZone(selectedZone)
+    end
+end)
+
+g:Slider("Walk Speed",{min = 10; max = 200; precise = false;},function(t)
+    Humanoid.WalkSpeed = t
+end)
+
+g:Slider("Jump Power",{min = 10; max = 200; precise = false;},function(s)
+    Humanoid.JumpPower = s
+end)
+
+--[[ function hatchTO(placeCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = placeCFrame;
+    end
+end
+
+function openEggs(egg)
+    if game:GetService("ReplicatedStorage").itemStorage:FindFirstChild(egg) then
+        
+end ]]
+
+
+--[[ game:GetService("ReplicatedStorage").Remotes.Bonus:InvokeServer()
+
+-- Script generated by SimpleSpy - credits to exx#9394
+
+local args = {
+    [1] = "mineOre"
+}
+
+game:GetService("ReplicatedStorage").Remotes.claimAchievment:FireServer(unpack(args))
+
+
+-- Script generated by SimpleSpy - credits to exx#9394
+
+local args = {
+    [1] = "1"
+}
+
+game:GetService("ReplicatedStorage").Remotes.BuyZone:FireServer(unpack(args))
+
+
+-- Script generated by SimpleSpy - credits to exx#9394
+
+local args = {
+    [1] = "unlockArea"
+}
+
+game:GetService("ReplicatedStorage").Remotes.claimAchievment:FireServer(unpack(args))
+
+
+-- Script generated by SimpleSpy - credits to exx#9394
+
+local args = {
+    [1] = "hatchEgg"
+}
+
+game:GetService("ReplicatedStorage").Remotes.claimAchievment:FireServer(unpack(args)) ]]
