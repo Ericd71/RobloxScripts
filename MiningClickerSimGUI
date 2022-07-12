@@ -37,6 +37,20 @@ function buyEgg(eggType)
     end)
 end
 
+function getAchievements()
+    spawn(function()
+        while Achievements == true do
+            local args = {[1] = "hatchEgg"}
+            game:GetService("ReplicatedStorage").Remotes.claimAchievment:FireServer(unpack(args))
+            local args = {[1] = "unlockArea"}
+            game:GetService("ReplicatedStorage").Remotes.claimAchievment:FireServer(unpack(args))
+            local args = {[1] = "mineOre"}
+            game:GetService("ReplicatedStorage").Remotes.claimAchievment:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
 --------------------------------------------------------------------------
 
 function getCurrentPlayerPOS()
@@ -117,6 +131,13 @@ b:Toggle("Auto Rebirth",function(bool)
     end
 end)
 
+b:Toggle("Get Achievements", function(bool)
+    getgenv().Achievements = bool
+    print("Auto Achievements is: ", bool)
+    if bool then
+        getAchievements();
+    end
+end)
 
 local selectedEgg
 i:Dropdown("Eggs",{"Starter Egg","Spotted Egg","Floral Egg", "Desert Egg", "Snow Egg", "Cave Egg", "Ocean Egg", "Jungle Egg", "Volcano Egg", "Space Egg", "Undead Egg", "Heavenly Egg", "Devil Egg", "1M Egg"},true,function(value) --true/false, replaces the current title "Dropdown" with the option that t
