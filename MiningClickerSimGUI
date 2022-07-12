@@ -14,7 +14,7 @@ function doMine()
     spawn(function()
         while Mine == true do
             game:GetService("ReplicatedStorage").Remotes.Click:InvokeServer()
-            wait(0.5)
+            wait()
         end
     end)
 end
@@ -31,9 +31,8 @@ end
 function buyEgg(eggType)
     spawn(function()
         while getgenv().Hatch == true do
-        local args = {[1] = eggType,[2] = 1}
-        game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(unpack(args))
-        wait()
+        game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(eggType,3.1)
+        wait(1)
         end
     end)
 end
