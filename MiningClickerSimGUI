@@ -32,7 +32,7 @@ function buyEgg(eggType)
     spawn(function()
         while getgenv().Hatch == true do
         game:GetService("ReplicatedStorage").Remotes.buyEgg:InvokeServer(eggType,3.1)
-        wait(1)
+        wait()
         end
     end)
 end
