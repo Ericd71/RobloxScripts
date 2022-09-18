@@ -1,0 +1,8 @@
+getgenv().Do = true;
+
+local Character = game.Players.LocalPlayer.Character
+
+while Do == true do
+    Character.HumanoidRootPart.CFrame = CFrame.new(396.812622, 3402.76294, -285.762634, 0.69834882, 0, 0.715757608, 0, 1, 0, -0.715757608, 0, 0.69834882)
+    wait(2)
+end
