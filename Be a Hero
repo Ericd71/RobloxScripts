@@ -1,5 +1,3 @@
-getgenv().Do = true;
-
 local Character = game.Players.LocalPlayer.Character
 
 while Do == true do
